@@ -1,0 +1,17 @@
+dist: trusty
+language: java
+cache:
+- directories:
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+addons:
+  sonarcloud:
+    organization: emerson-matos
+    token:
+      secure: F1p4KNuDUljuCieTJAGjcwZqI4W/flbnuApkwm8ZLKOEObBwgVRVqnBz0NBphpKmlKJhd6bnQ89jQTlEo3HJtzQAkjuXJn3m/qidl3XczHAtuXIrN1acmFoItrS1nndhVK1EtPQ9HRFgg5ERzWL6s2UyH4i9W9xk7D7w1wpvAWBarTRGlsB2vNFucapR9wUo8tikMopfZPMxKZkPdeCY4rhuL9CBon8Z1dTTYGDCGL7yXuYOIpbytgBmBbvKpn/w30ilfTF/3FqscobIZKuiwJ4IVpuDEzOvrqHvYw7y0YCXOhq5DSWm8lrlLm8i3Z5n6zCtLnfh6xjgYXq86uQOLmjgKAPlnD3UiSJ9InzsFLmxYgD5m8XhWTjK8I0dsq/tmxwXjb0HeWIh32wNTvJ+eO/kDwvHfOEx8fApGqe9gHCwBkYEJXVSdjo37qUufKc9WFyvy7XqbqVmVZx0bHL4+MpDqR8LfO2c6Slwc0iMSnbAdgmO57Lco8nxAGmgq89eq5zXAIxFxwatU9nX4r/3kdHROeGdXA0fDDjhXvchnu7/eDQTu5gVJKaVYLuPxYlEpMkj13okRbvvL9djYbDRUGlmADRmifpV0PyzvsyfUsWpM53Ir9xAtcneRLWRijLJw+vUfwafrFuizZ8SBSYX7ROLaOUifeY+FFFz1Z/vQXk=
+jobs:
+  include:
+  - stage: unit tests
+    script: cd ./spring-boot-rest && mvn clean jacoco:prepare-agent install jacoco:report sonar:sonar -Dsonar.projectKey=emerson-matos_financasapi
